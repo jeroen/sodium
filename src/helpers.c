@@ -34,3 +34,10 @@ SEXP R_randombytes_buf(SEXP length){
   return res;
 }
 
+SEXP R_sodium_memcmp(SEXP buf1, SEXP buf2) {
+  if(LENGTH(buf1) != LENGTH(buf2))
+    Rf_error("buf1 and buf2 have different lengths");
+  return ScalarLogical(
+    !sodium_memcmp((char*) RAW(buf1), (char*) RAW(buf2), LENGTH(buf1))
+  );
+}

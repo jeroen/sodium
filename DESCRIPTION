@@ -17,5 +17,6 @@ SystemRequirements: libsodium (>= 1.0.3)
 VignetteBuilder: knitr
 Suggests:
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat
 RoxygenNote: 6.1.0

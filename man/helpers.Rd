@@ -6,6 +6,7 @@
 \alias{helpers}
 \alias{hex2bin}
 \alias{random}
+\alias{memcmp}
 \title{Sodium Utilities}
 \usage{
 bin2hex(bin)
@@ -13,6 +14,8 @@ bin2hex(bin)
 hex2bin(hex, ignore = ":")
 
 random(n = 1)
+
+memcmp(buf1, buf2)
 }
 \arguments{
 \item{bin}{raw vector with binary data to convert to hex string}
@@ -22,11 +25,22 @@ random(n = 1)
 \item{ignore}{a string with characters to ignore from \code{hex}. See example.}
 
 \item{n}{number of random bytes or numbers to generate}
+
+\item{buf1}{data1 to be compared}
+
+\item{buf2}{data2 to be compared}
+}
+\value{
+\code{memcmp} returns TRUE if both arguments are equal, otherwise FALSE.
 }
 \description{
 The functions \code{bin2hex} and \code{hex2bin} convert between binary (raw)
 vectors and corresponding string in hexadecimal notation. The \code{random}
 function generates \code{n} crypto secure random bytes.
+The function \code{memcmp} tests equality in constant time;
+its goal is to mitigate side-channel attacks.
+Note that \code{memcmp} is not a lexicographic comparator and it throws
+an error if the two arguments are not of equal length.
 }
 \examples{
 # Convert raw to hex string and back
@@ -40,5 +54,9 @@ stopifnot(identical(x, paste(test, collapse = "")))
 x2 <- paste(test, collapse = ":")
 y2 <- hex2bin(x2, ignore = ":")
 stopifnot(identical(test, y2))
+
+# Compare data in constant time
+x <- memcmp(test, test)
+stopifnot(isTRUE(x))
 }
 \concept{sodium}
